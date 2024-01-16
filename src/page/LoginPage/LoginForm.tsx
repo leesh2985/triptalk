@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import KakaoLogin from '../../component/SocialLogin/KakaoLogin';
 import GoogleLogin from '../../component/SocialLogin/Google';
 import { useDispatch } from 'react-redux';
@@ -14,8 +14,10 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const naviget = useNavigate();
-  const [userEmail, setUserEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [userEmail, setUserEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  const [userEmail, setUserEmail] = useState('triptalk@naver.com');
+  const [password, setPassword] = useState('triptalk123');
 
   const handleEmail = (e: { target: { value: SetStateAction<string> } }) => {
     // 이메일 값 받아오기
@@ -36,16 +38,14 @@ const LoginForm = () => {
     }
   }, []);
 
+  // 하드코딩 로그인마 시도
   const handleLogin = async () => {
     //로그인 시도
     try {
-      const response = await axios.post(`https://triptalk.xyz/api/users/login`, {
-        email: userEmail,
-        password: password,
-      });
+      const response = { status: 200 };
 
       if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token', 'hardcoded_token');
         localStorage.setItem('userEmail', userEmail);
         localStorage.setItem('password', password);
 
@@ -82,6 +82,53 @@ const LoginForm = () => {
       }
     }
   };
+
+  // const handleLogin = async () => {
+  //   //로그인 시도
+  //   try {
+  //     const response = await axios.post(`https://triptalk.xyz/api/users/login`, {
+  //       email: userEmail,
+  //       password: password,
+  //     });
+
+  //     if (response.status === 200) {
+  //       localStorage.setItem('token', response.data.token);
+  //       localStorage.setItem('userEmail', userEmail);
+  //       localStorage.setItem('password', password);
+
+  //       // const message = '로그인 되었습니다.';
+  //       // alert(`${message}`);
+  //       // setUserEmail('');
+  //       // setPassword('');
+  //       // naviget('/main');
+  //       Swal.fire({
+  //         // icon: 'success',
+  //         title: '로그인 되었습니다.',
+  //       }).then(() => {
+  //         setUserEmail('');
+  //         setPassword('');
+  //         naviget('/main');
+  //       });
+  //     } else {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: '유효하지 않은 사용자 입니다.',
+  //       });
+  //     }
+  //   } catch (error: any) {
+  //     if (error.response.data) {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: '아이디와 비밀번호가 일치하지 않습니다.',
+  //       });
+  //     } else {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: '서버와의 연결이 끊어졌습니다.',
+  //       });
+  //     }
+  //   }
+  // };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleLogin();
