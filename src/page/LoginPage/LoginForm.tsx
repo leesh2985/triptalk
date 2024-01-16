@@ -144,9 +144,20 @@ const LoginForm = () => {
       <OrDivider>
         <span>또는</span>
       </OrDivider>
-      <InputEmail type="email" placeholder="이메일" value={userEmail} onChange={handleEmail} />
+      <InputEmail
+        type="email"
+        placeholder="'triptalk@naver.com'로 입력해주세요"
+        value={userEmail}
+        onChange={handleEmail}
+      />
       <br />
-      <InputPw type="password" placeholder="비밀번호" value={password} onChange={handlePw} onKeyDown={handleKeyPress} />
+      <InputPw
+        type="password"
+        placeholder="'triptalk123'로 입력해주세요"
+        value={password}
+        onChange={handlePw}
+        onKeyDown={handleKeyPress}
+      />
       <LoginButton onClick={handleLogin}>로그인</LoginButton>
       <Div>
         <span>아이디 찾기</span>
