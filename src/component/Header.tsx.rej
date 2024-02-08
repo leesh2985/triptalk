@@ -1,0 +1,6 @@
+diff a/src/component/Header.tsx b/src/component/Header.tsx	(rejected hunks)
+@@ -2,3 +3,4 @@
++import { useRef, useState } from 'react';
+ import styled from 'styled-components';
+ import Search from './Search/Search';
+ import { DEFAULT_FONT_COLOR, MAIN_COLOR } from '../color/color';
