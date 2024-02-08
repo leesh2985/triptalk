@@ -24,7 +24,7 @@ export default function ItemCard({ item }: { item: Item }) {
             </IconWithCount>
             <IconWithCount>
               <LookUp />
-              <Count>{item.views}</Count>
+              <Count>{item.views || '0'}</Count>
             </IconWithCount>
           </TopContainer>
           <MiddleTitleContainer>{item.title}</MiddleTitleContainer>
