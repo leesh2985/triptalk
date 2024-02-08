@@ -12,6 +12,8 @@ import ScheduleMapLoader from '../../component/ScheduleMap';
 import { FaArrowLeft } from 'react-icons/fa';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { FakeUser } from '../../utils/fakerDate';
+// import { FakeUser } from '../../utils/fakerDate';
 
 interface PlannerDetail {
   placeResponse: {
@@ -72,7 +74,9 @@ export default function SecheduleDetail() {
     plannerDetailResponse: [],
   });
 
-  const [userPing, setUserPing] = useState([]);
+  // const [userPing, setUserPing] = useState([]);
+  const [userPing, setUserPing] = useState<{ latitude: number; longitude: number }[]>([]);
+
   const token = useSelector((state: RootState) => state.token.token);
   const { plannerId } = useParams();
   const navigate = useNavigate();
@@ -113,6 +117,30 @@ export default function SecheduleDetail() {
         setLikeCount(likeCount);
       } catch (error) {
         console.error('상세 페이지 정보 및 좋아요/저장 상태 가져오기 오류:', error);
+        console.log('가짜 데이터를 사용합니다.');
+
+        // 가짜 데이터
+        const fakeData = FakeUser();
+        setMainDetailData({
+          plannerId: fakeData.plannerId,
+          description: fakeData.description,
+          title: fakeData.title,
+          likeCount: fakeData.likeCount,
+          views: fakeData.views,
+          startDate: moment(fakeData.startDate).add(9, 'hours').format('YYYY-MM-DD'),
+          endDate: moment(fakeData.endDate).add(9, 'hours').format('YYYY-MM-DD'),
+          nickname: fakeData.nickname,
+          profile: fakeData.profile,
+          userId: fakeData.userId,
+          email: fakeData.email,
+          plannerDetailResponse: [],
+        });
+
+        const allCoordinates = [...Array(5)].map(() => ({
+          latitude: fakeData.latitude,
+          longitude: fakeData.longitude,
+        }));
+        setUserPing(allCoordinates);
       }
     };
 
