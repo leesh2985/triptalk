@@ -20,5 +20,8 @@ export function FakeUser() {
     createAt: faker.date.recent().getTime(), // 게시물 등록 날짜
     views: faker.number.int({ min: 10, max: 100 }), // 조회수
     likeCount: faker.number.int({ min: 10, max: 100 }), // 좋아요 수
+    image: [faker.image.imageUrl(avatarSeed)], // 이미지
+    date: faker.date.recent().toISOString(),
+    place: faker.address.city(), // 장소이름
   };
 }
