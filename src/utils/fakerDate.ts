@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker/locale/ko';
 
-export function generateFakeUser() {
+export function FakeUser() {
   const avatarSeed = Math.floor(Math.random() * 1000);
   return {
     plannerId: faker.string.uuid(), // 식별자
