@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface Place {
   plannerDetailId: number;
@@ -17,8 +18,8 @@ interface Place {
   date: string;
   views: number | null;
   likeCount: number | null;
-  lat: number;
-  lon: number;
+  latitude: number;
+  longitude: number;
 }
 
 export default function TravelMap() {
@@ -27,6 +28,13 @@ export default function TravelMap() {
   const [travelLatitude, setTravelLatitude] = useState(37.5665);
   const [placesData, setPlacesData] = useState<Place[]>([]);
   const [mapPings, setMapPings] = useState([]);
+
+  const fakeUsers = [];
+
+  for (let i = 0; i < 10; i++) {
+    const fakeUser = FakeUser();
+    fakeUsers.push(fakeUser);
+  }
 
   useEffect(() => {
     const Access_token = localStorage.getItem('token');
@@ -45,8 +53,8 @@ export default function TravelMap() {
           setPlacesData(response.data);
 
           const newMapPings = response.data.map((item: Place) => ({
-            latitude: item.lat,
-            longitude: item.lon,
+            latitude: item.latitude,
+            longitude: item.longitude,
             image: item.image,
             description: item.description,
           }));
@@ -65,6 +73,8 @@ export default function TravelMap() {
 
   console.log('placesData', placesData);
 
+  const finalData = fakeUsers.length > 0 ? fakeUsers : placesData;
+
   return (
     <TravelContainer>
       <TravelTitleContainer>
@@ -81,7 +91,7 @@ export default function TravelMap() {
         />
       </Map>
       <PostBorder></PostBorder>
-      <TravelPosts travelDatas={placesData} />
+      <TravelPosts travelDatas={finalData} />
     </TravelContainer>
   );
 }

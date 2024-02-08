@@ -14,8 +14,8 @@ interface TravelPostData {
   date: string;
   views: number | null;
   likeCount: number | null;
-  lat: number;
-  lon: number;
+  latitude: number;
+  longitude: number;
 }
 
 interface TravelPostsProps {
