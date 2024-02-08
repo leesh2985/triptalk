@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice';
 import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface Item {
   startDate: number;
@@ -42,74 +43,13 @@ function NextArrow(props: CustomArrowProps) {
   );
 }
 
-const hardCodedData = [
-  {
-    startDate: new Date('2023/12/13').getTime(),
-    endDate: new Date('2023/12/20').getTime(),
-    plannerId: 1,
-    thumbnail: 'img/5.jpg',
-    title: '원데이클래스~~',
-    nickname: '도레미',
-    views: 100,
-    likeCount: 50,
-  },
-  {
-    startDate: new Date('2023-12-21').getTime(),
-    endDate: new Date('2023-12-28').getTime(),
-    plannerId: 2,
-    thumbnail: 'img/6.jpg',
-    title: '햅삐클스~',
-    nickname: '해피캣',
-    views: 120,
-    likeCount: 60,
-  },
-  {
-    startDate: new Date('2023-12-29').getTime(),
-    endDate: new Date('2024-01-05').getTime(),
-    plannerId: 3,
-    thumbnail: 'img/2.jpg',
-    title: '겨울바다',
-    nickname: '지브리',
-    views: 80,
-    likeCount: 40,
-  },
-  {
-    startDate: new Date('2023-01-06').getTime(),
-    endDate: new Date('2023-01-13').getTime(),
-    plannerId: 4,
-    thumbnail: 'img/1.jpg',
-    title: '바나나토스트',
-    nickname: '집짱',
-    views: 150,
-    likeCount: 75,
-  },
-  {
-    startDate: new Date('2023-03-14').getTime(),
-    endDate: new Date('2023-03-21').getTime(),
-    plannerId: 5,
-    thumbnail: 'img/3.jpg',
-    title: '봄은 꽃이지',
-    nickname: '꿀벌',
-    views: 200,
-    likeCount: 100,
-  },
-  {
-    startDate: new Date('2023-01-22').getTime(),
-    endDate: new Date('2023-01-29').getTime(),
-    plannerId: 6,
-    thumbnail: 'img/4.jpg',
-    title: '샐러드맛집',
-    nickname: '헿',
-    views: 90,
-    likeCount: 45,
-  },
-];
-
 function LikeCarousel() {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.token.token);
-  // const [data, setData] = useState<Item[]>([]);
-  const [data, setData] = useState<Item[]>(hardCodedData);
+  const [data, setData] = useState<Item[]>([]);
+
+  // 가짜데이터
+  const fakeDataTop = Array.from({ length: 6 }, _ => FakeUser());
 
   useEffect(() => {
     const Access_token = localStorage.getItem('token');
@@ -138,6 +78,9 @@ function LikeCarousel() {
     };
     fetchData();
   }, [token]);
+
+  const finalData = fakeDataTop.length > 0 ? fakeDataTop : data;
+
   const settings = {
     dots: false,
     infinite: true,
@@ -174,7 +117,7 @@ function LikeCarousel() {
   return (
     <Container>
       <Slider {...settings}>
-        {data.map((item, index) => (
+        {finalData.map((item, index) => (
           <Card key={index}>
             <Badge>{index + 1}등</Badge>
             <Link to={`/page/${item.plannerId}`} key={item.plannerId}>
