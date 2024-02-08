@@ -6,6 +6,7 @@ import AnotherPlanner from './AnotherPlanner';
 import MyPost from './MyPost';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../../store/store';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface userInfoDate {
   userId: number;
@@ -66,6 +67,10 @@ export default function MyInfoPost({ userInfo }: { userInfo: userInfoDate }) {
   }));
 
   // const token = useSelector((state: RootState) => state.token.token);
+
+  // 가짜데이터
+  const fakeDataPost = Array.from({ length: 3 }, _ => FakeUser());
+  const fakeDataAnotherPost = Array.from({ length: 2 }, _ => FakeUser());
 
   useEffect(() => {
     const fetchSerch = async () => {
@@ -136,11 +141,14 @@ export default function MyInfoPost({ userInfo }: { userInfo: userInfoDate }) {
     }
   }, [postsData, anotherpostsData]);
 
+  const finalData = fakeDataPost.length > 0 ? fakeDataPost : postsData;
+  const finalAnotherData = fakeDataAnotherPost.length > 0 ? fakeDataAnotherPost : anotherPlanners;
+
   return (
     <PostContainer className={containerClassName}>
       {userInfo.userId === anotherUserInfo.userId
-        ? postsData.map(item => <MyPost key={item.plannerId} postsData={item} />)
-        : anotherPlanners.map((aontherItem: PlannerDetails) => (
+        ? finalData.map(item => <MyPost key={item.plannerId} postsData={item} />)
+        : finalAnotherData.map((aontherItem: PlannerDetails) => (
             <AnotherPlanner key={aontherItem.plannerId} plannerData={aontherItem} />
           ))}
       {isLoading && <LoadingMessage>로딩 중...</LoadingMessage>}
