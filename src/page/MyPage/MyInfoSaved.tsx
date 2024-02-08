@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import MySaved from './MySaved';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface Save {
   id: number;
@@ -17,6 +18,9 @@ export default function MyInfoSaved() {
   const [savedData, setSavedData] = useState<Save[]>([]); // msw
   const [containerClassName, setContainerClassName] = useState('flex-start');
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+
+  // 가짜데이터
+  const fakeDataSave = Array.from({ length: 2 }, _ => FakeUser());
 
   useEffect(() => {
     if (savedData.length >= 2) {
@@ -57,9 +61,11 @@ export default function MyInfoSaved() {
     fetchData();
   }, []);
 
+  const finalData = fakeDataSave.length > 0 ? fakeDataSave : savedData;
+
   return (
     <SavedContainer className={containerClassName}>
-      {savedData.map(item => (
+      {finalData.map(item => (
         <MySaved key={item.plannerId} savedData={item} />
       ))}
       {isLoading && <LoadingMessage>로딩 중...</LoadingMessage>}
