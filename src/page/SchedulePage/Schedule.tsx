@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { DEFAULT_FONT_COLOR } from '../../color/color';
 import axios from 'axios';
 import ItemCard from '../../component/Sechedule/ItemCard';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface Item {
   createAt: number;
@@ -36,6 +37,13 @@ function Schedule() {
   const previousToken = useRef<string | null>(null);
   const previousPage = useRef<number | null>(null);
   const previousSortType = useRef<string | null>(null);
+
+  const fakeUsers = [];
+
+  for (let i = 0; i < 10; i++) {
+    const fakeUser = FakeUser();
+    fakeUsers.push(fakeUser);
+  }
 
   useEffect(() => {
     if (token === null) {
@@ -148,6 +156,8 @@ function Schedule() {
     }
   }, [searchParams]);
 
+  const finalData = fakeUsers.length > 0 ? fakeUsers : data;
+
   return (
     <>
       <Header />
@@ -160,7 +170,7 @@ function Schedule() {
           <EditButton to="/addSchedule">일정등록하기</EditButton>
         </TitleContainer>
         <GridContainer>
-          {data.map(item => (
+          {finalData.map(item => (
             <ItemCard key={item.plannerId} item={item} />
           ))}
         </GridContainer>
