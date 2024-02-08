@@ -23,5 +23,7 @@ export function FakeUser() {
     image: [faker.image.imageUrl(avatarSeed)], // 이미지
     date: faker.date.recent().toISOString(),
     place: faker.address.city(), // 장소이름
+    aboutMe: faker.lorem.words(), // 소개
+    id: faker.datatype.number({ min: 0, max: 6 }),
   };
 }
