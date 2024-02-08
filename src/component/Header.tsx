@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Search from './Search/Search';
 import { DEFAULT_FONT_COLOR, MAIN_COLOR } from '../color/color';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+// import axios from 'axios';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../store/store';
 import { BiBell } from 'react-icons/bi';
 import Modal from './Notice/Modal';
 import HamburgerButton from './HamburgerButton';
@@ -28,10 +28,10 @@ interface userInfoDate {
 
 export default function Header() {
   //  const [userImg, setUserImg] = useState(''); // msw
-  const token = useSelector((state: RootState) => state.token.token); // Redux에서 토큰 가져오기
+  // const token = useSelector((state: RootState) => state.token.token); // Redux에서 토큰 가져오기
   const tabsRef = useRef<HTMLUListElement>(null);
   const location = useLocation();
-  const [headerUser, setHeaderUser] = useState<userInfoDate>({
+  const [headerUser] = useState<userInfoDate>({
     userId: 0,
     name: '',
     profile: '',
@@ -65,29 +65,29 @@ export default function Header() {
   // }, []);
 
   // 연동
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get('https://triptalk.xyz/api/users/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`, //필수
-          },
-        });
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const fetchUserInfo = async () => {
+  //     try {
+  //       const response = await axios.get('https://triptalk.xyz/api/users/profile', {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`, //필수
+  //         },
+  //       });
 
-        if (response.data) {
-          setHeaderUser(response.data);
-        } else {
-          console.log(response);
-          alert('사용자 정보가 없습니다 로그인확인해주세요');
-        }
-      } catch (error) {
-        console.error('사용자 정보 가져오기 오류 확인바람(헤더):', error);
-      }
-    };
+  //       if (response.data) {
+  //         setHeaderUser(response.data);
+  //       } else {
+  //         console.log(response);
+  //         alert('사용자 정보가 없습니다 로그인확인해주세요');
+  //       }
+  //     } catch (error) {
+  //       console.error('사용자 정보 가져오기 오류 확인바람(헤더):', error);
+  //     }
+  //   };
 
-    fetchUserInfo(); // 비동기 함수 호출
-  }, [token]);
+  //   fetchUserInfo(); // 비동기 함수 호출
+  // }, [token]);
 
   return (
     <GnbContainer>
@@ -111,7 +111,11 @@ export default function Header() {
         </Nav>
         <S_Div>
           <User to={`/myinfo/${headerUser.userId}`}>
-            <UserImg src={headerUser.profile} alt="User" />
+            {headerUser.profile ? (
+              <UserImg src={headerUser.profile} alt="User" />
+            ) : (
+              <PlaceholderImg src="/img/profile.png" alt="기본프로필" />
+            )}
           </User>
           <Notice onClick={handleModalOpen}>
             <Bell />
@@ -186,6 +190,22 @@ const User = styled(Link)`
 `;
 
 const UserImg = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  @media (max-width: 685px) {
+    width: 45px;
+    height: 45px;
+  }
+  @media (max-width: 430px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const PlaceholderImg = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 100%;
