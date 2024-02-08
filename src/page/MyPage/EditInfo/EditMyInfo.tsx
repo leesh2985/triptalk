@@ -13,7 +13,7 @@ import { LuSettings } from 'react-icons/lu';
 export default function EditMyInfo() {
   const navigate = useNavigate();
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // 버튼 활성화 상태 추가
-  const [userImg, setUserImg] = useState('');
+  const [userImg, setUserImg] = useState('/img/profile.png');
   const imgRef = useRef<HTMLInputElement | null>(null); // 초기에는 아무것도 가르키고 있지 않음
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [currentImg, setCurrentImg] = useState('');
@@ -155,8 +155,12 @@ export default function EditMyInfo() {
     }
   };
 
+  // const handleBackButtonClick = () => {
+  //   navigate(`/myinfo/${userUniqueId}`); // 이전 페이지로 이동
+  // };
+
   const handleBackButtonClick = () => {
-    navigate(`/myinfo/${userUniqueId}`); // 이전 페이지로 이동
+    navigate(-1); // 가짜데이터연결용
   };
 
   const handleDeleteAccount = async () => {
