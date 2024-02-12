@@ -12,6 +12,7 @@ import ScheduleMapLoader from '../../component/ScheduleMap';
 import { FaArrowLeft } from 'react-icons/fa';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { FakeUser } from '../../utils/fakerDate';
 
 interface PlannerDetail {
   placeResponse: {
@@ -57,19 +58,35 @@ export default function SecheduleDetail() {
   const [isLiked, setIsLiked] = useState(false); // 좋아요 상태 (눌렸는지 안눌렸는지)
   const [isSaved, setIsSaved] = useState(false);
 
+  const fakeUser = FakeUser();
+
+  // const [mainDetailData, setMainDetailData] = useState<MainDetailData>({
+  //   plannerId: 0,
+  //   description: '',
+  //   title: '',
+  //   likeCount: 0,
+  //   views: 0,
+  //   startDate: '',
+  //   endDate: '',
+  //   nickname: '',
+  //   profile: '',
+  //   userId: 0,
+  //   email: '',
+  //   plannerDetailResponse: [],
+  // });
   const [mainDetailData, setMainDetailData] = useState<MainDetailData>({
-    plannerId: 0,
-    description: '',
-    title: '',
-    likeCount: 0,
-    views: 0,
-    startDate: '',
-    endDate: '',
-    nickname: '',
-    profile: '',
-    userId: 0,
-    email: '',
-    plannerDetailResponse: [],
+    plannerId: fakeUser.plannerId,
+    description: fakeUser.description,
+    title: fakeUser.title,
+    likeCount: fakeUser.likeCount,
+    views: fakeUser.views,
+    startDate: fakeUser.startDate,
+    endDate: fakeUser.endDate,
+    nickname: fakeUser.nickname,
+    profile: fakeUser.profile,
+    userId: fakeUser.userId,
+    email: fakeUser.email,
+    plannerDetailResponse: fakeUser.plannerDetailResponse,
   });
 
   const [userPing, setUserPing] = useState([]);
