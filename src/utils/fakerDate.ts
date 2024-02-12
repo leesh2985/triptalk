@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker/locale/ko';
+import moment from 'moment';
 
 export function FakeUser() {
   const avatarSeed = Math.floor(Math.random() * 1000);
@@ -11,8 +12,8 @@ export function FakeUser() {
     profile: faker.image.avatar(), // 프로필사진
     userId: faker.datatype.number({ min: 1, max: 6 }), // 아이디
     password: faker.internet.password(), // 비번
-    startDate: faker.date.recent().getTime(), // 간날
-    endDate: faker.date.future().getTime(), // 온날
+    startDate: moment(faker.date.recent().getTime()).format('YYYY-MM-DD'), // 간날
+    endDate: moment(faker.date.future().getTime()).format('YYYY-MM-DD'), // 온날
     title: faker.lorem.words(), // 타이틀
     latitude: Number(faker.address.latitude()), // 위도
     longitude: Number(faker.address.longitude()), // 경도
@@ -25,5 +26,6 @@ export function FakeUser() {
     place: faker.address.city(), // 장소이름
     aboutMe: faker.lorem.words(), // 소개
     id: faker.datatype.number({ min: 0, max: 6 }),
+    plannerDetailResponse: [],
   };
 }
