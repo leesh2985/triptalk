@@ -11,12 +11,13 @@ import { RootState } from '../../store/store';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utils/formatDate';
+// import formatDate from '../../utils/formatDate';
 import { FakeUser } from '../../utils/fakerDate';
+import moment from 'moment';
 
 interface Item {
-  startDate: number;
-  endDate: number;
+  startDate: string;
+  endDate: string; // 형식 numder-> string
   plannerId: number;
   thumbnail: string;
   title: string;
@@ -113,6 +114,10 @@ function LikeCarousel() {
       },
     ],
   };
+
+  function formatDate(date: moment.MomentInput) {
+    return moment(date).format('YYYY-MM-DD');
+  } // moment라이브러리사용
 
   return (
     <Container>
