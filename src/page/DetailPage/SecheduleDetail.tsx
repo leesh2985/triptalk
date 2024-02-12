@@ -74,6 +74,7 @@ export default function SecheduleDetail() {
   //   email: '',
   //   plannerDetailResponse: [],
   // });
+  // 원본
   const [mainDetailData, setMainDetailData] = useState<MainDetailData>({
     plannerId: fakeUser.plannerId,
     description: fakeUser.description,
@@ -87,7 +88,7 @@ export default function SecheduleDetail() {
     userId: fakeUser.userId,
     email: fakeUser.email,
     plannerDetailResponse: fakeUser.plannerDetailResponse,
-  });
+  }); // 가짜데이터
 
   const [userPing, setUserPing] = useState([]);
   const token = useSelector((state: RootState) => state.token.token);
