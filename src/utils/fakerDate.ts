@@ -3,6 +3,28 @@ import moment from 'moment';
 
 export function FakeUser() {
   const avatarSeed = Math.floor(Math.random() * 1000);
+  const numPlannerDetails = faker.datatype.number({ min: 1, max: 3 }); // 포스트박스
+
+  const plannerDetailResponse = Array.from({ length: numPlannerDetails }, (_, index) => {
+    // const numImages = faker.datatype.number({ min: 1, max: 3 }); //이미지갯수
+
+    return {
+      userId: faker.datatype.number({ min: 1, max: 6 }),
+      plannerDetailId: index + 1,
+      date: moment(faker.date.recent().getTime()).format('YYYY-MM-DD'),
+      placeResponse: {
+        placeName: faker.address.city(),
+        roadAddress: faker.address.streetAddress(),
+        addressName: faker.address.streetName(),
+        latitude: Number(faker.address.latitude()),
+        longitude: Number(faker.address.longitude()),
+      },
+      description: faker.lorem.sentence(),
+      // imagesUrl: Array.from({ length: numImages }, () => faker.image.imageUrl(avatarSeed + index)),
+      imagesUrl: [faker.image.imageUrl(avatarSeed + index)],
+    };
+  });
+
   return {
     plannerId: faker.datatype.number({ min: 1, max: 6 }), // 식별자
     plannerDetailId: faker.datatype.number({ min: 1, max: 32 }), // 상세페이지 번호
@@ -26,6 +48,6 @@ export function FakeUser() {
     place: faker.address.city(), // 장소이름
     aboutMe: faker.lorem.words(), // 소개
     id: faker.datatype.number({ min: 0, max: 6 }),
-    plannerDetailResponse: [],
+    plannerDetailResponse,
   };
 }
